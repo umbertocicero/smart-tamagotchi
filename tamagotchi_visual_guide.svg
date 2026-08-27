@@ -1,0 +1,355 @@
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <!-- Define colors -->
+  <defs>
+    <style>
+      .body-main { fill: #FFE5B4; stroke: #D2B48C; stroke-width: 2; }
+      .body-highlight { fill: #FFF8DC; stroke: none; }
+      .eye-pupil { fill: #1a1a1a; }
+      .eye-white { fill: #FFFFFF; stroke: #1a1a1a; stroke-width: 1; }
+      .eye-shine { fill: #FFFFFF; }
+      .mouth { fill: #FF69B4; stroke: #D2B48C; stroke-width: 1; }
+      .cheek { fill: #FF69B4; opacity: 0.6; }
+      .text-label { font-family: Arial, sans-serif; font-size: 18px; font-weight: bold; fill: #333; }
+      .phase-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="800" fill="#f5f5f5"/>
+
+  <!-- Title -->
+  <text x="600" y="40" class="phase-label" text-anchor="middle" font-size="32">
+    Tamagotchi AI — Evoluzione e Stati Emozionali
+  </text>
+
+  <!-- ============ FASE 1: NEONATO (0-24h) ============ -->
+  <g id="baby">
+    <!-- Background circle -->
+    <circle cx="150" cy="200" r="140" fill="#fffef0" stroke="#ddd" stroke-width="2"/>
+    
+    <!-- Corpo -->
+    <ellipse cx="150" cy="220" rx="50" ry="60" class="body-main"/>
+    
+    <!-- Testa -->
+    <circle cx="150" cy="120" r="45" class="body-main"/>
+    
+    <!-- Highlight belly -->
+    <ellipse cx="150" cy="240" rx="25" ry="35" class="body-highlight"/>
+    
+    <!-- Occhi (innocenti, tondi) -->
+    <circle cx="130" cy="105" r="12" class="eye-white"/>
+    <circle cx="170" cy="105" r="12" class="eye-white"/>
+    <circle cx="130" cy="105" r="7" class="eye-pupil"/>
+    <circle cx="170" cy="105" r="7" class="eye-pupil"/>
+    <circle cx="132" cy="102" r="3" class="eye-shine"/>
+    <circle cx="172" cy="102" r="3" class="eye-shine"/>
+    
+    <!-- Bocca piccola (oh) -->
+    <circle cx="150" cy="130" r="6" class="mouth" fill="none" stroke="#FF69B4" stroke-width="2"/>
+    
+    <!-- Zampe -->
+    <ellipse cx="120" cy="280" rx="15" ry="20" class="body-main"/>
+    <ellipse cx="180" cy="280" rx="15" ry="20" class="body-main"/>
+    
+    <!-- Label -->
+    <text x="150" y="350" class="text-label" text-anchor="middle">Neonato (0-24h)</text>
+    <text x="150" y="375" text-anchor="middle" font-size="14" fill="#666">Innocente, dorme molto</text>
+  </g>
+
+  <!-- ============ FASE 2: BAMBINO (24-96h) - FELICE ============ -->
+  <g id="child-happy">
+    <!-- Background circle -->
+    <circle cx="450" cy="200" r="140" fill="#fffef0" stroke="#ddd" stroke-width="2"/>
+    
+    <!-- Corpo -->
+    <rect x="410" y="200" width="80" height="100" rx="25" class="body-main"/>
+    
+    <!-- Testa -->
+    <circle cx="450" cy="110" r="50" class="body-main"/>
+    
+    <!-- Highlight belly -->
+    <rect x="425" y="220" width="50" height="60" rx="15" class="body-highlight"/>
+    
+    <!-- Occhi felici (^_^) -->
+    <!-- Left eye -->
+    <ellipse cx="425" cy="100" rx="14" ry="18" class="eye-white"/>
+    <path d="M 415 100 Q 425 108 435 100" stroke="#1a1a1a" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <circle cx="425" cy="105" r="4" class="eye-pupil"/>
+    <circle cx="427" cy="102" r="2" class="eye-shine"/>
+    
+    <!-- Right eye -->
+    <ellipse cx="475" cy="100" rx="14" ry="18" class="eye-white"/>
+    <path d="M 465 100 Q 475 108 485 100" stroke="#1a1a1a" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <circle cx="475" cy="105" r="4" class="eye-pupil"/>
+    <circle cx="477" cy="102" r="2" class="eye-shine"/>
+    
+    <!-- Guance rosa -->
+    <circle cx="400" cy="115" r="12" class="cheek"/>
+    <circle cx="500" cy="115" r="12" class="cheek"/>
+    
+    <!-- Bocca felice (smile) -->
+    <path d="M 440 135 Q 450 145 460 135" stroke="#FF69B4" stroke-width="3" fill="none" stroke-linecap="round"/>
+    
+    <!-- Braccia -->
+    <ellipse cx="390" cy="250" rx="15" ry="40" class="body-main"/>
+    <ellipse cx="510" cy="250" rx="15" ry="40" class="body-main"/>
+    
+    <!-- Zampe -->
+    <ellipse cx="420" cy="310" rx="18" ry="25" class="body-main"/>
+    <ellipse cx="480" cy="310" rx="18" ry="25" class="body-main"/>
+    
+    <!-- Emote cuore -->
+    <text x="450" y="35" font-size="24" text-anchor="middle">♡ ♡</text>
+    
+    <!-- Label -->
+    <text x="450" y="350" class="text-label" text-anchor="middle">Bambino Felice (24-96h)</text>
+    <text x="450" y="375" text-anchor="middle" font-size="14" fill="#666">Gioca, sorride, affettuoso</text>
+  </g>
+
+  <!-- ============ FASE 2: BAMBINO (24-96h) - AFFAMATO ============ -->
+  <g id="child-hungry">
+    <!-- Background circle -->
+    <circle cx="750" cy="200" r="140" fill="#fffef0" stroke="#ddd" stroke-width="2"/>
+    
+    <!-- Corpo -->
+    <rect x="710" y="200" width="80" height="100" rx="25" class="body-main"/>
+    
+    <!-- Testa -->
+    <circle cx="750" cy="110" r="50" class="body-main"/>
+    
+    <!-- Highlight belly -->
+    <rect x="725" y="220" width="50" height="60" rx="15" class="body-highlight"/>
+    
+    <!-- Occhi affamati (◯_◯ dilatati) -->
+    <!-- Left eye -->
+    <circle cx="725" cy="100" r="16" class="eye-white"/>
+    <circle cx="725" cy="100" r="10" class="eye-pupil"/>
+    <circle cx="730" cy="95" r="3" class="eye-shine"/>
+    
+    <!-- Right eye -->
+    <circle cx="775" cy="100" r="16" class="eye-white"/>
+    <circle cx="775" cy="100" r="10" class="eye-pupil"/>
+    <circle cx="780" cy="95" r="3" class="eye-shine"/>
+    
+    <!-- Bocca affamata (◯) -->
+    <circle cx="750" cy="135" r="8" fill="none" stroke="#FF69B4" stroke-width="2"/>
+    
+    <!-- Braccia -->
+    <ellipse cx="690" cy="250" rx="15" ry="40" class="body-main"/>
+    <ellipse cx="810" cy="250" rx="15" ry="40" class="body-main"/>
+    
+    <!-- Zampe -->
+    <ellipse cx="720" cy="310" rx="18" ry="25" class="body-main"/>
+    <ellipse cx="780" cy="310" rx="18" ry="25" class="body-main"/>
+    
+    <!-- Emote goccia di sudore / fame -->
+    <text x="750" y="35" font-size="24" text-anchor="middle">💧 💧</text>
+    
+    <!-- Label -->
+    <text x="750" y="350" class="text-label" text-anchor="middle">Bambino Affamato</text>
+    <text x="750" y="375" text-anchor="middle" font-size="14" fill="#666">Occhi dilatati, urgenza</text>
+  </g>
+
+  <!-- ============ FASE 3: ADOLESCENTE - TRISTE ============ -->
+  <g id="teen-sad">
+    <!-- Background circle -->
+    <circle cx="1050" cy="200" r="140" fill="#fffef0" stroke="#ddd" stroke-width="2"/>
+    
+    <!-- Corpo (più alto) -->
+    <path d="M 1010 210 Q 1010 200 1030 200 L 1070 200 Q 1090 200 1090 210 L 1090 310 Q 1090 330 1070 330 L 1030 330 Q 1010 330 1010 310 Z" class="body-main"/>
+    
+    <!-- Testa (più grande) -->
+    <circle cx="1050" cy="110" r="55" class="body-main"/>
+    
+    <!-- Highlight -->
+    <ellipse cx="1050" cy="240" rx="28" ry="40" class="body-highlight"/>
+    
+    <!-- Occhi tristi (T_T con lacrime) -->
+    <!-- Left eye arco verso il basso -->
+    <ellipse cx="1025" cy="95" rx="16" ry="20" class="eye-white"/>
+    <path d="M 1015 105 Q 1025 112 1035 105" stroke="#1a1a1a" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <circle cx="1025" cy="108" r="5" class="eye-pupil"/>
+    
+    <!-- Lacrima sinistra -->
+    <path d="M 1025 120 Q 1023 130 1025 140" stroke="#87CEEB" stroke-width="2" fill="none"/>
+    <circle cx="1025" cy="142" r="3" fill="#87CEEB"/>
+    
+    <!-- Right eye -->
+    <ellipse cx="1075" cy="95" rx="16" ry="20" class="eye-white"/>
+    <path d="M 1065 105 Q 1075 112 1085 105" stroke="#1a1a1a" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <circle cx="1075" cy="108" r="5" class="eye-pupil"/>
+    
+    <!-- Lacrima destra -->
+    <path d="M 1075 120 Q 1073 130 1075 140" stroke="#87CEEB" stroke-width="2" fill="none"/>
+    <circle cx="1075" cy="142" r="3" fill="#87CEEB"/>
+    
+    <!-- Bocca triste (arco rovesciato) -->
+    <path d="M 1040 130 Q 1050 125 1060 130" stroke="#FF69B4" stroke-width="2" fill="none" stroke-linecap="round"/>
+    
+    <!-- Braccia abbassate -->
+    <ellipse cx="990" cy="260" rx="18" ry="50" class="body-main"/>
+    <ellipse cx="1110" cy="260" rx="18" ry="50" class="body-main"/>
+    
+    <!-- Zampe -->
+    <ellipse cx="1020" cy="330" rx="20" ry="28" class="body-main"/>
+    <ellipse cx="1080" cy="330" rx="20" ry="28" class="body-main"/>
+    
+    <!-- Emote cuore rotto -->
+    <text x="1050" y="35" font-size="24" text-anchor="middle">💔</text>
+    
+    <!-- Label -->
+    <text x="1050" y="500" class="text-label" text-anchor="middle">Adolescente Triste</text>
+    <text x="1050" y="525" text-anchor="middle" font-size="14" fill="#666">Affetto carente, piange</text>
+  </g>
+
+  <!-- ============ BASSO: ALTRE FASI ============ -->
+
+  <!-- FASE 0: UOVO -->
+  <g id="egg">
+    <!-- Background -->
+    <circle cx="150" cy="620" r="110" fill="#fffef0" stroke="#ddd" stroke-width="2"/>
+    
+    <!-- Uovo -->
+    <ellipse cx="150" cy="640" rx="55" ry="70" class="body-main"/>
+    
+    <!-- Highlight -->
+    <ellipse cx="135" cy="590" rx="20" ry="25" class="body-highlight"/>
+    
+    <!-- Piccoli occhi dentro (bozza) -->
+    <circle cx="140" cy="630" r="4" fill="#1a1a1a"/>
+    <circle cx="160" cy="630" r="4" fill="#1a1a1a"/>
+    
+    <!-- Bocca piccolissima -->
+    <path d="M 148 650 L 152 650" stroke="#FF69B4" stroke-width="1"/>
+    
+    <!-- Crack animazione (opzionale) -->
+    <line x1="150" y1="580" x2="150" y2="600" stroke="#333" stroke-width="2"/>
+    
+    <!-- Label -->
+    <text x="150" y="750" class="text-label" text-anchor="middle">Uovo (Fase 0)</text>
+    <text x="150" y="775" text-anchor="middle" font-size="14" fill="#666">In attesa di schiudersi</text>
+  </g>
+
+  <!-- FASE 3: ADOLESCENTE - NORMALE -->
+  <g id="teen-normal">
+    <!-- Background -->
+    <circle cx="450" cy="620" r="110" fill="#fffef0" stroke="#ddd" stroke-width="2"/>
+    
+    <!-- Corpo -->
+    <path d="M 420 620 Q 420 600 440 600 L 460 600 Q 480 600 480 620 L 480 700 Q 480 720 460 720 L 440 720 Q 420 720 420 700 Z" class="body-main"/>
+    
+    <!-- Testa -->
+    <circle cx="450" cy="530" r="55" class="body-main"/>
+    
+    <!-- Highlight -->
+    <ellipse cx="450" cy="660" rx="28" ry="40" class="body-highlight"/>
+    
+    <!-- Occhi normali consapevoli (◉_◉) -->
+    <circle cx="425" cy="515" r="15" class="eye-white"/>
+    <circle cx="425" cy="515" r="9" class="eye-pupil"/>
+    <circle cx="428" cy="510" r="2" class="eye-shine"/>
+    
+    <circle cx="475" cy="515" r="15" class="eye-white"/>
+    <circle cx="475" cy="515" r="9" class="eye-pupil"/>
+    <circle cx="478" cy="510" r="2" class="eye-shine"/>
+    
+    <!-- Bocca normale -->
+    <path d="M 440 545 Q 450 555 460 545" stroke="#FF69B4" stroke-width="2" fill="none" stroke-linecap="round"/>
+    
+    <!-- Braccia -->
+    <ellipse cx="400" cy="660" rx="18" ry="50" class="body-main"/>
+    <ellipse cx="500" cy="660" rx="18" ry="50" class="body-main"/>
+    
+    <!-- Zampe -->
+    <ellipse cx="430" cy="720" rx="20" ry="28" class="body-main"/>
+    <ellipse cx="470" cy="720" rx="20" ry="28" class="body-main"/>
+    
+    <!-- Label -->
+    <text x="450" y="750" class="text-label" text-anchor="middle">Adolescente (96-240h)</text>
+    <text x="450" y="775" text-anchor="middle" font-size="14" fill="#666">Personalità emerge</text>
+  </g>
+
+  <!-- FASE 4: ADULTO - FELICE -->
+  <g id="adult-happy">
+    <!-- Background -->
+    <circle cx="750" cy="620" r="110" fill="#fffef0" stroke="#ddd" stroke-width="2"/>
+    
+    <!-- Corpo proporzionato -->
+    <path d="M 710 630 Q 710 600 740 600 L 760 600 Q 790 600 790 630 L 790 720 Q 790 740 760 740 L 740 740 Q 710 740 710 720 Z" class="body-main"/>
+    
+    <!-- Testa (25% altura) -->
+    <circle cx="750" cy="520" r="60" class="body-main"/>
+    
+    <!-- Highlight -->
+    <ellipse cx="750" cy="680" rx="32" ry="45" class="body-highlight"/>
+    
+    <!-- Occhi maturi e felici (◯_◯) -->
+    <circle cx="720" cy="500" r="16" class="eye-white"/>
+    <circle cx="720" cy="500" r="10" class="eye-pupil"/>
+    <circle cx="724" cy="495" r="3" class="eye-shine"/>
+    
+    <circle cx="780" cy="500" r="16" class="eye-white"/>
+    <circle cx="780" cy="500" r="10" class="eye-pupil"/>
+    <circle cx="784" cy="495" r="3" class="eye-shine"/>
+    
+    <!-- Occhi felici (sorriso) -->
+    <path d="M 710 500 Q 720 510 730 500" stroke="#1a1a1a" stroke-width="2" fill="none"/>
+    <path d="M 770 500 Q 780 510 790 500" stroke="#1a1a1a" stroke-width="2" fill="none"/>
+    
+    <!-- Guance rosa -->
+    <circle cx="695" cy="520" r="14" class="cheek"/>
+    <circle cx="805" cy="520" r="14" class="cheek"/>
+    
+    <!-- Bocca grande felice -->
+    <path d="M 735 540 Q 750 555 765 540" stroke="#FF69B4" stroke-width="3" fill="none" stroke-linecap="round"/>
+    
+    <!-- Braccia -->
+    <ellipse cx="690" cy="680" rx="20" ry="55" class="body-main"/>
+    <ellipse cx="810" cy="680" rx="20" ry="55" class="body-main"/>
+    
+    <!-- Zampe -->
+    <ellipse cx="720" cy="740" rx="22" ry="30" class="body-main"/>
+    <ellipse cx="780" cy="740" rx="22" ry="30" class="body-main"/>
+    
+    <!-- Emote stelle -->
+    <text x="750" y="445" font-size="20" text-anchor="middle">✨ ✨</text>
+    
+    <!-- Label -->
+    <text x="750" y="750" class="text-label" text-anchor="middle">Adulto Felice (240+h)</text>
+    <text x="750" y="775" text-anchor="middle" font-size="14" fill="#666">Maturo e consapevole</text>
+  </g>
+
+  <!-- FASE 4: ADULTO - MALATO -->
+  <g id="adult-sick">
+    <!-- Background (con overlay grigio) -->
+    <circle cx="1050" cy="620" r="110" fill="#fffef0" stroke="#ddd" stroke-width="2"/>
+    <circle cx="1050" cy="620" r="108" fill="#999999" opacity="0.3"/>
+    
+    <!-- Corpo -->
+    <path d="M 1010 630 Q 1010 600 1040 600 L 1060 600 Q 1090 600 1090 630 L 1090 720 Q 1090 740 1060 740 L 1040 740 Q 1010 740 1010 720 Z" class="body-main" opacity="0.7"/>
+    
+    <!-- Testa -->
+    <circle cx="1050" cy="520" r="60" class="body-main" opacity="0.7"/>
+    
+    <!-- Tremori (shakiness) -->
+    <ellipse cx="1053" cy="683" rx="32" ry="45" class="body-highlight" opacity="0.5"/>
+    
+    <!-- Occhi stanchi (- o -) -->
+    <line x1="1020" y1="500" x2="1030" y2="500" stroke="#1a1a1a" stroke-width="2"/>
+    
+    <!-- Right eye larger -->
+    <circle cx="1080" cy="500" r="12" class="eye-white"/>
+    <circle cx="1080" cy="500" r="8" class="eye-pupil" opacity="0.5"/>
+    
+    <!-- Bocca neutra -->
+    <line x1="1040" y1="540" x2="1060" y2="540" stroke="#FF69B4" stroke-width="2"/>
+    
+    <!-- Goccia sudore -->
+    <text x="1050" y="445" font-size="20" text-anchor="middle">💧</text>
+    
+    <!-- Label -->
+    <text x="1050" y="750" class="text-label" text-anchor="middle">Adulto Malato</text>
+    <text x="1050" y="775" text-anchor="middle" font-size="14" fill="#666">Pallido, tremolante, sudato</text>
+  </g>
+
+</svg>
