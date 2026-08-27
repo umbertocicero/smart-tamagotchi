@@ -4,24 +4,36 @@
 
 ### Filosofia
 
-Il Tamagotchi è una **creatura morbida, kawaii, pixel-art**, con:
-- **proporzioni buffo** (testa grande, corpo tondo, piedi piccoli);
-- **occhi espressivi** (pupille mobili, ammicco);
-- **colori caldi** (palette ridotta: giallo pastello, arancione, rosa, bianco, nero);
+Il Tamagotchi è un **draghetto kawaii** (come il riferimento allegato), con:
+- **proporzioni chibi** (testa molto grande, corpo piccolo, arti corti);
+- **tratti iconici** da drago (corna morbide, mini ali, coda corta);
+- **occhi molto espressivi** (pupille piccole nere + riflesso bianco);
+- **colori caldi e saturi** con outline scuro quasi nero;
 - **linee arrotondate** (niente angoli acuti, tutto è soft);
 - **animazioni fluide** (8–12 frame per azione, ciclo 500–1000 ms).
 
-### Palette colori suggerita
+### Firma stilistica del personaggio
+
+Per mantenere coerenza con il draghetto di riferimento:
+
+- testa circa 1.4x la larghezza del busto;
+- occhi rotondi/ellittici con pupilla piccola e riflesso alto;
+- ventre più chiaro del corpo (patch centrale);
+- dettagli "cute" obbligatori: guance rosse, zampette tonde, bocca piccola;
+- ali e corna sempre con silhouette morbida (mai aggressive).
+
+### Palette colori suggerita (dragon style)
 
 ```text
-Corpo principale:      #FFE5B4 (peach/giallo pastello)
-Highlight/belly:      #FFF8DC (bianchetto)
-Occhi pupilla:        #1a1a1a (nero quasi puro)
-Occhi luccichio:      #FFFFFF (bianco)
-Bocca/guance:         #FF69B4 (rosa caldo)
-Ombre/outline:        #D2B48C (tan scuro)
-Stress/angry:         #FF4444 (rosso-arancio)
-Happy/glow:           #FFD700 (oro)
+Corpo principale:      #F2644B (rosso-arancio)
+Ventre/inner wings:    #F6E6C8 (crema chiaro)
+Outline principale:    #2B2B2B (quasi nero)
+Ombra corpo:           #D94A3C (rosso mattone)
+Occhi pupilla:         #1F1F1F (nero morbido)
+Occhi luccichio:       #FFFFFF (bianco)
+Guance/bocca:          #E63A3A (rosso guancia)
+Spine/corna:           #C7362D (rosso scuro)
+Effetto happy/glow:    #FFD45A (giallo dorato)
 ```
 
 ### Dimensioni asset
@@ -30,6 +42,22 @@ Happy/glow:           #FFD700 (oro)
 - **Animazioni**: frame singoli 80×80, organizzati in spritesheet
 - **Uovo iniziale**: 120×140 px (più grande, verticale)
 - **UI elementi**: icone 32×32, label con font anti-aliased
+
+### Pipeline: da immagine riferimento a sprite per ESP32
+
+1. Importa l'immagine del draghetto in Aseprite/Piskel.
+2. Traccia una **silhouette master** in 80x80 px (solo contorno).
+3. Separa in layer: `head`, `body`, `eyes`, `mouth`, `wings`, `tail`, `effects`.
+4. Applica la palette a 8 colori (sezione sopra) per ridurre memoria.
+5. Disegna i keyframe delle azioni (`IDLE`, `FEED`, `PLAY`, `SLEEP`, `WASH`).
+6. Esporta spritesheet + atlas JSON.
+7. Converti PNG in formato C per LVGL (`lv_img_conv`) o usa filesystem SPIFFS/LittleFS.
+
+Output target consigliato:
+
+- PNG indexed (8-bit) + trasparenza;
+- massimo 512x1024 per spritesheet;
+- naming: `dragon_<fase>_<azione>_<frame>.png`.
 
 ---
 
@@ -110,7 +138,7 @@ Durata totale: 2–3 secondi, con suono crack + piccolo verso.
 
 ### Ingrassamento progressivo
 
-Ogni fase ha **3 versioni di larghezza** in base al peso (hunger inverso + calorie cumulate):
+Ogni fase ha **3 versioni di larghezza** in base al peso (`hunger` inversa + calorie cumulate):
 
 1. **Snello** (basso peso): corpo stretto, linea di cintura visibile
 2. **Normale** (peso medio): proporzioni equilibrate
@@ -168,13 +196,69 @@ Malato:        corpo che trema, pallore leggero
 
 ---
 
+## 3-bis. Modello coerente stato + emozioni
+
+Per mantenere coerenza tra gameplay e resa visiva, le animazioni non scelgono "a mano" l'emozione: la ricevono dal Game Engine, che la calcola dagli stati numerici.
+
+### Stati canonici (scala 0..100)
+
+- `hunger` (0 sazio, 100 affamato)
+- `energy` (0 esausto, 100 carico)
+- `hygiene` (0 sporco, 100 pulito)
+- `health` (0 critico, 100 ottimo)
+- `affection`
+- `fun`
+- `stress`
+
+Regola unica di aggiornamento:
+
+```text
+nuovo_valore = clamp(vecchio_valore + delta_tempo + delta_azione + delta_evento, 0, 100)
+```
+
+### Emozione risultante (somma pesata)
+
+```text
+happy_score   = 0.30*(100-hunger) + 0.25*energy + 0.20*affection + 0.15*fun + 0.10*hygiene - 0.25*stress
+sad_score     = 0.30*hunger + 0.25*(100-energy) + 0.20*(100-affection) + 0.15*(100-fun) + 0.10*stress
+angry_score   = 0.40*stress + 0.25*hunger + 0.20*(100-energy) + 0.15*event_frustration
+sleepy_score  = 0.60*(100-energy) + 0.20*hunger + 0.20*age_phase
+sick_score    = 0.50*(100-health) + 0.25*(100-hygiene) + 0.25*hunger
+playful_score = 0.35*energy + 0.30*fun + 0.20*affection + 0.15*(100-stress)
+```
+
+Priorità visiva (per evitare conflitti):
+
+1. `SICK` se `health < 30`
+2. `SLEEPY` se `energy < 20`
+3. `HUNGRY` se `hunger > 80`
+4. `DIRTY` se `hygiene < 25`
+5. altrimenti max score tra `HAPPY`, `SAD`, `ANGRY`, `PLAYFUL`, `CALM`
+
+### Delta canonici delle azioni (allineati al Game Engine)
+
+| Azione | hunger | energy | hygiene | health | affection | fun | stress | experience |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| FEED | -40 | -5 | -2 | +2 | +2 | +2 | -4 | 0 |
+| PLAY | +5 | -25 | -4 | +1 | +10 | +30 | -8 | +4 |
+| SLEEP | +5 | +45 | 0 | +8 | 0 | -5 | -12 | 0 |
+| PET | +1 | -2 | 0 | +1 | +3 | +5 | -6 | 0 |
+| WASH | 0 | -10 | +35 | +4 | +5 | +2 | -10 | 0 |
+| STUDY | +2 | -15 | 0 | 0 | +1 | +3 | +2 | +10 |
+| POOP_EVENT | 0 | -1 | -20 | -3 | -1 | -2 | +8 | 0 |
+| MEDICINE | 0 | -2 | 0 | +20 | +1 | -1 | -5 | 0 |
+
+> Le sezioni azione qui sotto descrivono la coreografia animata; i delta sopra sono la fonte unica di verità per la logica stato/emozione.
+
+---
+
 ## 4. Animazioni per azioni
 
-Ogni azione è un **ciclo di frame** con transizioni smooth.
+Ogni azione è un **ciclo di frame** con transizioni smooth; l'emozione mostrata a fine azione viene sempre ricalcolata dal modello di cui sopra.
 
 ### FEED (Mangiare)
 
-**Trigger**: intent FEED, fame > 0, energy >= 10.
+**Trigger**: intent FEED, `hunger > 0`, `energy >= 10`.
 
 **Flusso**:
 1. **Anticipation** (200 ms): corpo si piega in avanti, occhi brillano, bocca si apre poco
@@ -190,13 +274,13 @@ Ogni azione è un **ciclo di frame** con transizioni smooth.
 
 **Effetti audio**: "munch munch", piccolo verso di felicità (0.5 s, basso volume).
 
-**Stato finale**: `hunger -= 40`, `mood += 15`, `energy -= 5`, `affection += 2`.
+**Delta stato (canonico)**: `hunger -= 40`, `energy -= 5`, `hygiene -= 2`, `health += 2`, `affection += 2`, `fun += 2`, `stress -= 4`.
 
 ---
 
 ### PLAY (Giocare)
 
-**Trigger**: intent PLAY, energy >= 20, mood >= 30.
+**Trigger**: intent PLAY, `energy >= 20` e `stress <= 75`.
 
 **Flusso**:
 1. **Setup** (200 ms): corpo si raddrizza, occhi brillano (★_★), piccolo salto
@@ -208,17 +292,17 @@ Ogni azione è un **ciclo di frame** con transizioni smooth.
    - corpo che salta verticalmente (3 bounce rapidi)
    - espressione super-felice (^o^)
    - emote musicali (note di musica animate, pop-pop-pop)
-4. **Affaticamento** (300 ms): corpo che si afflloscia leggermente, respirazione visibile (pancia su-giù)
+4. **Affaticamento** (300 ms): corpo che si affloscia leggermente, respirazione visibile (pancia su-giù)
 
 **Effetti audio**: "bouncy jump" (200 Hz), risate (0.5–1 s), musichetta di vittoria.
 
-**Stato finale**: `hunger += 5`, `mood += 30`, `energy -= 25`, `affection += 10`.
+**Delta stato (canonico)**: `hunger += 5`, `energy -= 25`, `hygiene -= 4`, `health += 1`, `affection += 10`, `fun += 30`, `stress -= 8`, `experience += 4`.
 
 ---
 
 ### SLEEP (Dormire)
 
-**Trigger**: intent SLEEP, energy < 30 oppure sleep_needed > 50%.
+**Trigger**: intent SLEEP, `energy < 30` oppure ritmo circadiano in fascia notturna.
 
 **Flusso**:
 1. **Sbadiglio** (400 ms):
@@ -228,7 +312,7 @@ Ogni azione è un **ciclo di frame** con transizioni smooth.
 2. **Coricarsi** (300 ms):
    - corpo che si accuccia (curva verso il basso)
    - testa che si appoggia
-3. **Sonno profondo** (loop fino a `sleep_needed` == 0):
+3. **Sonno profondo** (loop finché il bisogno di sonno non rientra):
    - occhi chiusi (-)
    - bocca neutra (— )
    - piccoli Z che fluttuano su (emote, pop-pop-pop ogni 500 ms)
@@ -240,7 +324,7 @@ Ogni azione è un **ciclo di frame** con transizioni smooth.
 
 **Effetti audio**: sbadiglio leggero, ronzio-ronzio sonno, verso di sveglia (dolce).
 
-**Stato finale**: `energy = 100`, `mood = mood max`, `hunger += 5`.
+**Delta stato (canonico)**: `energy += 45`, `hunger += 5`, `health += 8`, `fun -= 5`, `stress -= 12`.
 
 ---
 
@@ -261,7 +345,7 @@ Ogni azione è un **ciclo di frame** con transizioni smooth.
 
 **Effetti audio**: verso dolce di felicità, leggero suono "carezza" (swoosh).
 
-**Stato finale**: `mood += 8`, `affection += 3`, `hunger += 1` (piccolo costo energetico).
+**Delta stato (canonico)**: `hunger += 1`, `energy -= 2`, `health += 1`, `affection += 3`, `fun += 5`, `stress -= 6`.
 
 ---
 
@@ -284,7 +368,7 @@ Ogni azione è un **ciclo di frame** con transizioni smooth.
 
 **Effetti audio**: suono caratteristico ma **non sgradevole** (suono cartoon leggero, tipo "plink").
 
-**Stato finale**: `digestion = 0`, `mood -= 3` (un po' di imbarazzo), `affection -= 1`.
+**Delta stato (canonico, evento automatico)**: `energy -= 1`, `hygiene -= 20`, `health -= 3`, `affection -= 1`, `fun -= 2`, `stress += 8`.
 
 **Nota**: il popo rimane visibile sullo schermo per 5 secondi se non viene pulito → trigger per WASH.
 
@@ -313,7 +397,7 @@ Ogni azione è un **ciclo di frame** con transizioni smooth.
 
 **Effetti audio**: suono di acqua che scorre, asciugamano, verso di felicità (più alto del solito).
 
-**Stato finale**: `mood += 20`, `affection += 5`, `energy -= 10`, popo scompare.
+**Delta stato (canonico)**: `energy -= 10`, `hygiene += 35`, `health += 4`, `affection += 5`, `fun += 2`, `stress -= 10`.
 
 ---
 
@@ -339,7 +423,7 @@ Ogni azione è un **ciclo di frame** con transizioni smooth.
 
 **Effetti audio**: suono di pagine che girano, verso di "hmm" pensieroso, suono di "ding" quando impara.
 
-**Stato finale**: `mood += 5`, `energy -= 15`, `experience += 10`, `curiosity += 2`.
+**Delta stato (canonico)**: `hunger += 2`, `energy -= 15`, `affection += 1`, `fun += 3`, `stress += 2`, `experience += 10`.
 
 ---
 
@@ -359,7 +443,9 @@ Ogni azione è un **ciclo di frame** con transizioni smooth.
 
 **Effetti audio**: verso di malessere debole, niente musica.
 
-**Stato finale**: `mood -= 20`, `affection -= 5`, inibisce gioco/studio finché non guarisce.
+**Stato finale**: priorità emozione `SICK`; gioco/studio inibiti finché `health >= 30`.
+
+**Delta consigliato per tick in stato malato (ogni minuto)**: `energy -= 1`, `hunger += 1`, `stress += 2`.
 
 ---
 

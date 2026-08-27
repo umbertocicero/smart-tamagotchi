@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <style>
+      .ol { stroke: #3b2c9e; stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
+      .body { fill: #ff3f73; }
+      .bodyShade { fill: #e63466; }
+      .belly { fill: #ffd9a8; }
+      .white { fill: #ffffff; }
+      .dark { fill: #29245d; }
+      .pink { fill: #ff7fa8; }
+      .heart { fill: #ff2f76; }
+      .wingMem { fill: #ffe6bf; }
+      .shadow { fill: #ba8dcf; opacity: 0.45; }
+    </style>
+
+    <!-- Interchangeable action icons for the bubble -->
+    <g id="icon-heart">
+      <path class="heart" d="M0,-10 C0,-18 7,-23 14,-18 C17,-16 19,-13 20,-10 C21,-13 23,-16 26,-18 C33,-23 40,-18 40,-10 C40,2 29,11 20,18 C11,11 0,2 0,-10 Z"/>
+    </g>
+    <g id="icon-food">
+      <path class="ol" fill="#ffb24a" d="M4,10 C4,-2 14,-12 26,-12 C36,-12 44,-6 48,3 C44,10 38,15 30,18 C18,22 9,19 4,10 Z"/>
+      <path class="ol" fill="#4caf50" d="M26,-12 C30,-18 36,-21 42,-20 C39,-15 34,-11 29,-9 Z"/>
+    </g>
+    <g id="icon-sleep">
+      <path class="ol" fill="#ffffff" d="M2,-14 H34 L10,14 H38"/>
+    </g>
+    <g id="icon-play">
+      <path class="ol" fill="#ffd45a" d="M8,-16 L40,0 L8,16 Z"/>
+    </g>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="#efb7df"/>
+
+  <!-- Ground shadow -->
+  <ellipse id="ground_shadow" class="shadow" cx="512" cy="835" rx="182" ry="42"/>
+
+  <!-- Action bubble with swappable icon -->
+  <g id="action_bubble" transform="translate(286 286)">
+    <ellipse class="white ol" cx="0" cy="0" rx="44" ry="34"/>
+    <path class="white ol" d="M-18,27 L-36,46 L-8,36 Z"/>
+    <g id="action_icon_slot" transform="translate(-20 -12) scale(0.85)">
+      <use href="#icon-heart"/>
+    </g>
+  </g>
+
+  <!-- Dragon rig root -->
+  <g id="dragon_root" transform="translate(512 540)">
+
+    <!-- Tail (separate for wag animation) -->
+    <g id="tail_group" transform="translate(172 170)">
+      <path id="tail_base" class="body ol" d="M0,0 C48,12 76,42 90,74 C86,102 60,118 34,118 C20,102 6,84 -6,58 C-16,36 -10,16 0,0 Z"/>
+      <path id="tail_under" class="belly ol" d="M18,56 C42,58 58,72 62,92 C50,98 36,96 24,90 C16,78 14,68 18,56 Z"/>
+      <path id="tail_spike_1" class="belly ol" d="M56,40 L74,26 L74,52 Z"/>
+      <path id="tail_spike_2" class="belly ol" d="M74,62 L92,48 L92,76 Z"/>
+    </g>
+
+    <!-- Wings (separate for flap animation) -->
+    <g id="wings_group">
+      <g id="wing_left" transform="translate(-232 -10)">
+        <path class="body ol" d="M0,0 C-42,-20 -80,-52 -94,-92 C-64,-92 -24,-74 12,-38 C16,-22 10,-10 0,0 Z"/>
+        <path class="wingMem ol" d="M-80,-88 C-46,-86 -20,-70 8,-40 C-20,-40 -44,-48 -66,-62 Z"/>
+        <path class="ol" fill="none" d="M-66,-62 L-54,-84"/>
+        <path class="ol" fill="none" d="M-42,-50 L-30,-76"/>
+      </g>
+      <g id="wing_right" transform="translate(232 -10)">
+        <path class="body ol" d="M0,0 C42,-20 80,-52 94,-92 C64,-92 24,-74 -12,-38 C-16,-22 -10,-10 0,0 Z"/>
+        <path class="wingMem ol" d="M80,-88 C46,-86 20,-70 -8,-40 C20,-40 44,-48 66,-62 Z"/>
+        <path class="ol" fill="none" d="M66,-62 L54,-84"/>
+        <path class="ol" fill="none" d="M42,-50 L30,-76"/>
+      </g>
+    </g>
+
+    <!-- Legs / feet (separate for walk animation) -->
+    <g id="legs_group" transform="translate(0 210)">
+      <g id="leg_left">
+        <ellipse class="body ol" cx="-92" cy="86" rx="54" ry="40"/>
+        <path class="belly ol" d="M-126,95 C-116,84 -104,82 -95,94 C-105,104 -116,106 -126,95 Z"/>
+        <path class="belly ol" d="M-98,102 C-90,92 -79,90 -71,101 C-79,109 -89,112 -98,102 Z"/>
+        <path class="belly ol" d="M-70,97 C-60,87 -49,86 -41,98 C-49,107 -60,109 -70,97 Z"/>
+      </g>
+      <g id="leg_right">
+        <ellipse class="body ol" cx="92" cy="86" rx="54" ry="40"/>
+        <path class="belly ol" d="M58,95 C68,84 80,82 89,94 C79,104 68,106 58,95 Z"/>
+        <path class="belly ol" d="M86,102 C94,92 105,90 113,101 C105,109 95,112 86,102 Z"/>
+        <path class="belly ol" d="M114,97 C124,87 135,86 143,98 C135,107 124,109 114,97 Z"/>
+      </g>
+    </g>
+
+    <!-- Torso -->
+    <g id="torso_group">
+      <ellipse id="torso_main" class="body ol" cx="0" cy="120" rx="170" ry="192"/>
+      <ellipse id="torso_shade" class="bodyShade" cx="-18" cy="140" rx="120" ry="148"/>
+      <ellipse id="belly_patch" class="belly ol" cx="0" cy="156" rx="92" ry="124"/>
+    </g>
+
+    <!-- Arms (separate for gesture animation) -->
+    <g id="arms_group" transform="translate(0 122)">
+      <g id="arm_left" transform="translate(-82 -4)">
+        <ellipse class="body ol" cx="0" cy="0" rx="42" ry="58"/>
+        <path class="belly ol" d="M-30,12 C-18,2 -6,0 4,10 C-4,22 -16,26 -30,12 Z"/>
+        <path class="belly ol" d="M-3,22 C7,12 19,10 29,21 C19,32 7,36 -3,22 Z"/>
+        <path class="belly ol" d="M24,12 C34,2 46,0 56,10 C46,22 34,26 24,12 Z"/>
+      </g>
+      <g id="arm_right" transform="translate(82 -4)">
+        <ellipse class="body ol" cx="0" cy="0" rx="42" ry="58"/>
+        <path class="belly ol" d="M-56,10 C-46,0 -34,2 -24,12 C-34,26 -46,22 -56,10 Z"/>
+        <path class="belly ol" d="M-29,21 C-19,10 -7,12 3,22 C-7,36 -19,32 -29,21 Z"/>
+        <path class="belly ol" d="M-4,10 C6,0 18,2 30,12 C16,26 4,22 -4,10 Z"/>
+      </g>
+    </g>
+
+    <!-- Belly flame (separate for pulse animation) -->
+    <g id="flame_group" transform="translate(0 168)">
+      <path id="flame_outer" class="ol" fill="#ffcc55" d="M0,-36 C-14,-56 0,-74 16,-90 C34,-64 40,-42 28,-22 C18,-8 8,-2 0,12 C-10,-2 -24,-10 -32,-24 C-44,-44 -32,-62 -14,-76 C-14,-58 -6,-48 0,-36 Z"/>
+      <path id="flame_inner" class="ol" fill="#ff8326" d="M0,-12 C-8,-26 0,-36 8,-48 C18,-34 20,-20 12,-8 C8,-2 4,0 0,8 C-4,0 -10,-2 -14,-8 C-20,-18 -16,-30 -8,-38 C-8,-28 -4,-20 0,-12 Z"/>
+    </g>
+
+    <!-- Head -->
+    <g id="head_group" transform="translate(0 -152)">
+      <ellipse id="head_main" class="body ol" cx="0" cy="0" rx="186" ry="156"/>
+
+      <!-- Horns -->
+      <g id="horns_group">
+        <path id="horn_left" class="belly ol" d="M-84,-130 C-92,-164 -70,-188 -46,-190 C-44,-162 -54,-144 -66,-124 Z"/>
+        <path id="horn_right" class="belly ol" d="M84,-130 C92,-164 70,-188 46,-190 C44,-162 54,-144 66,-124 Z"/>
+      </g>
+
+      <!-- Forehead gems/spots -->
+      <g id="forehead_marks">
+        <ellipse class="belly ol" cx="0" cy="-86" rx="14" ry="20"/>
+        <ellipse class="belly ol" cx="0" cy="-40" rx="12" ry="18"/>
+        <ellipse class="belly ol" cx="0" cy="2" rx="10" ry="15"/>
+      </g>
+
+      <!-- Eyes (fully separated for blink/look animation) -->
+      <g id="eyes_group">
+        <g id="eye_left" transform="translate(-70 22)">
+          <ellipse id="eye_left_white" class="white ol" cx="0" cy="0" rx="52" ry="44"/>
+          <g id="pupil_left" transform="translate(14 8)">
+            <ellipse class="dark" cx="0" cy="0" rx="28" ry="24"/>
+            <circle class="white" cx="10" cy="-10" r="7"/>
+            <circle class="white" cx="0" cy="-2" r="4"/>
+          </g>
+        </g>
+        <g id="eye_right" transform="translate(70 22)">
+          <ellipse id="eye_right_white" class="white ol" cx="0" cy="0" rx="52" ry="44"/>
+          <g id="pupil_right" transform="translate(-14 8)">
+            <ellipse class="dark" cx="0" cy="0" rx="28" ry="24"/>
+            <circle class="white" cx="-10" cy="-10" r="7"/>
+            <circle class="white" cx="0" cy="-2" r="4"/>
+          </g>
+        </g>
+      </g>
+
+      <!-- Face details -->
+      <g id="face_group">
+        <circle id="cheek_left" class="pink" cx="-132" cy="62" r="17"/>
+        <circle id="cheek_right" class="pink" cx="132" cy="62" r="17"/>
+
+        <ellipse id="snout" class="belly ol" cx="0" cy="68" rx="60" ry="44"/>
+        <ellipse id="nose_left" class="dark" cx="-18" cy="58" rx="6" ry="4"/>
+        <ellipse id="nose_right" class="dark" cx="18" cy="58" rx="6" ry="4"/>
+
+        <path id="mouth_outer" class="dark ol" d="M-28,84 Q0,114 28,84 Q24,132 0,134 Q-24,132 -28,84 Z"/>
+        <path id="mouth_tongue" class="pink" d="M-12,116 Q0,126 12,116 Q8,134 0,136 Q-8,134 -12,116 Z"/>
+      </g>
+    </g>
+  </g>
+</svg>

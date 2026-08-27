@@ -1,0 +1,4 @@
+- [] Immagine/icona che indica che il tamagochi è più intelliente se connesso al wi-fi
+- [] le frati generate da ai vengono memorizzate e categorizzate, per essere riprodotte in seguito. per la stessa categoria possono essere memorizzate più frasi e riprodotte in ordine casuale, per stupire il giocatore.
+- [] interazione con lo shake dell'accellerometro
+- [] senon mangia da tando e viene trascurato può morire e bisogna shakerare per riapartire e riaparte da zero (uovo)
